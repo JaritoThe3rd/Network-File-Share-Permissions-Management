@@ -1,57 +1,42 @@
-<p align="center">
-<img src="https://i.imgur.com/Ua7udoS.png" alt="Traffic Examination"/>
-</p>
+# Azure AD Lab: File Share Permissions
 
-<h1>Network Security Groups (NSGs) and Inspecting Traffic Between Azure Virtual Machines</h1>
-In this tutorial, we observe various network traffic to and from Azure Virtual Machines with Wireshark as well as experiment with Network Security Groups. <br />
+## Instructions
 
+1. **Power On VMs**
+    - Turn on the DC-1 and Client-1 VMs in the Azure Portal if they are off.
 
-<h2>Video Demonstration</h2>
+2. **Create Sample File Shares with Permissions**
+    - Log into DC-1 as your domain admin account (`mydomain.com\jane_admin`).
+    - Log into Client-1 as a normal user (`mydomain\<someuser>`).
+    - On DC-1, open the C:\ drive and create the following folders:
+        - `read-access`
+        - `write-access`
+        - `no-access`
+        - `accounting`
+    - Share each folder and set the following permissions:
+        - **read-access**: Group = `Domain Users`, Permission = `Read`
+        - **write-access**: Group = `Domain Users`, Permission = `Read/Write`
+        - **no-access**: Group = `Domain Admins`, Permission = `Read/Write`
+        - *(Skip sharing "accounting" for now)*
 
-- ### [YouTube: Azure Virtual Machines, Wireshark, and Network Security Groups](https://www.youtube.com)
+3. **Test File Share Access as a Normal User**
+    - On Client-1, log in as `<someuser>`.
+    - Press `Win + R` and enter `\\dc-1` to open the shared folders.
+    - Attempt to access each shared folder:
+        - Which folders can you access?
+        - Which folders can you create or edit files in?
+        - Does access match the permissions you set?
 
-<h2>Environments and Technologies Used</h2>
+4. **Create ACCOUNTANTS Security Group, Assign Permissions, and Test**
+    - On DC-1, in Active Directory, create a security group named `ACCOUNTANTS`.
+    - Set permissions on the `accounting` folder:
+        - Group = `ACCOUNTANTS`, Permission = `Read/Write`
+    - On Client-1, as `<someuser>`, try to access the `accounting` folder in `\\dc-1` (should fail).
+    - Log out from Client-1 as `<someuser>`.
+    - On DC-1, add `<someuser>` to the `ACCOUNTANTS` security group.
+    - Sign back into Client-1 as `<someuser>`, try to access the `accounting` share in `\\dc-1` again (should now work).
 
-- Microsoft Azure (Virtual Machines/Compute)
-- Remote Desktop
-- Various Command-Line Tools
-- Various Network Protocols (SSH, RDH, DNS, HTTP/S, ICMP)
-- Wireshark (Protocol Analyzer)
+5. **Cleanup**
+    - Delete the VMs if you are done, or keep using them for practice.
 
-<h2>Operating Systems Used </h2>
-
-- Windows 10 (21H2)
-- Ubuntu Server 20.04
-
-<h2>High-Level Steps</h2>
-
-- Step 1
-- Step 2
-- Step 3
-- Step 4
-
-<h2>Actions and Observations</h2>
-
-<p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-</p>
-<br />
-
-<p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-</p>
-<br />
-
-<p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-</p>
-<br />
+---
