@@ -40,7 +40,9 @@ https://github.com/user-attachments/assets/ba5d3591-b2b4-4eb2-861a-85c8d88d5859
     - On DC-1, add `<someuser>` to the `ACCOUNTANTS` security group.
     - Sign back into Client-1 as `<someuser>`, try to access the `accounting` share in `\\dc-1` again (should now work).
 
-5. **Cleanup**
-    - Delete the VMs if you are done, or keep using them for practice.
+
+
+https://github.com/user-attachments/assets/85072ede-bafe-4020-aecf-4197b6bd6dc0
+
 
 ---
