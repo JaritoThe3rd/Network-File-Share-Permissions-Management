@@ -27,6 +27,10 @@
         - Which folders can you create or edit files in?
         - Does access match the permissions you set?
 
+
+https://github.com/user-attachments/assets/ba5d3591-b2b4-4eb2-861a-85c8d88d5859
+
+
 4. **Create ACCOUNTANTS Security Group, Assign Permissions, and Test**
     - On DC-1, in Active Directory, create a security group named `ACCOUNTANTS`.
     - Set permissions on the `accounting` folder:
